@@ -4,27 +4,21 @@
 
 Esse sistema será um chat feito com Vuejs, NodeJs como backend e claro usando o socket.io tanto no front como no back. :+1:
 
-## Project setup
+## Setup
 
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Front
 
 ```
 npm run serve
 ```
 
-### backend
-
+### Backend
+Precisa ter instalado o nodemon globalmente.
 ```
 cd backend
 npm run nodemon
-```
-
-### Compiles and minifies for production
-
-```
-npm run build
 ```
