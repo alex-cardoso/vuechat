@@ -4,17 +4,16 @@
             <h2>Chat Vue</h2>
             <hr />
             <div class="text-left">
-                <b-input
-                    placeholder="Seu nome..."
-                    ref="name"
-                    value="Alexandre Cardoso"
-                ></b-input>
+                <b-input placeholder="Seu nome..." ref="name" value="Alexandre Cardoso"></b-input>
 
                 <div class="mt-3">
                     <div
                         class="p-2 mb-3"
                         style="border: solid 1px #efefef;width:100%;height:400px;"
                     >
+                        <template v-if="messages.length <= 0">
+                            <i>Comece uma convesra....</i>
+                        </template>
                         <p
                             v-for="(message, index) in formatedd_messages"
                             :key="index"
@@ -23,29 +22,20 @@
                     </div>
                 </div>
 
-                <b-input
-                    placeholder="Mensagem...."
-                    ref="message"
-                    value="Ola!!"
-                ></b-input>
+                <b-input placeholder="Mensagem...." ref="message" value="Ola!!"></b-input>
 
                 <span class="error">{{ error }}</span>
 
                 <br />
 
-                <b-button variant="outline-success mt-3" @click="send"
-                    >Enviar</b-button
-                >
+                <b-button variant="outline-success mt-3" @click="send">Enviar</b-button>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import socket from '../mixins/socket';
-
 export default {
-    mixins: [socket],
     data() {
         return {
             error: null,
@@ -53,7 +43,8 @@ export default {
         };
     },
     mounted() {
-        this.io.on('received', message => {
+        console.log(this.$parent);
+        this.$root.io.on('received', message => {
             // so quem recebe esse evento sao os outors usuarios, nao quem enviou.
             this.store_messages(message);
         });
@@ -83,7 +74,7 @@ export default {
             }
 
             this.store_messages({ name, message });
-            this.io.emit('message', { name, message });
+            this.$root.io.emit('message', { name, message });
 
             // Limpar o campo de mensagem pos enviar
             this.$refs.message.localValue = '';

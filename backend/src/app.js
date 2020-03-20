@@ -13,11 +13,8 @@ app.use(helmet());
 
 const io = socket(http);
 
-let messages = [];
-
 io.on('connection', function(socket) {
     socket.on('message', message => {
-        messages.push(messages);
         socket.broadcast.emit('received', message);
     });
 });
